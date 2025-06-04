@@ -30,4 +30,20 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).orElse(null);
         return user;
     }
+
+    @Override
+    public Integer modifyUserAccount(Integer userId,UserRegisterRequest userRegisterRequest) {
+
+        User user =  userRepository.findById(userId).orElse(null);
+        user.setEmail(userRegisterRequest.getEmail());
+        user.setPassword(userRegisterRequest.getPassword());
+        user.setLastModifiedDate(new Date());
+
+        return userRepository.save(user).getUserId();
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        userRepository.deleteById(id);
+    }
 }
